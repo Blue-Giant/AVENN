@@ -1,0 +1,18 @@
+2020年6月26日
+1、AVE_DNN2 中，loss_AVE作为loss function的部分，最后变得比较小(1e-4量级)，为避免被正则化参数的项吸收(大叔吃小数)。对loss_AVE做一个乘积因子func_penalty，
+使得函数的 loss 和权重偏置的loss数值相当。这里还需要注意的是，在前期的训练中 loss_AVE 还是偏大一些的，乘积因子func_penalty初始应该设置的小一点。为此，对于
+func_penalty的选取，我采用了阶段调整的策略。如下
+            if i_epoch < int(R['max_epoch'] / 10):
+                temp_penalty_func = penalty2func_init
+            elif i_epoch < int(R['max_epoch'] / 5):
+                temp_penalty_func = 10*penalty2func_init
+            elif i_epoch < int(R['max_epoch']/4):
+                temp_penalty_func = 50*penalty2func_init
+            elif i_epoch < int(R['max_epoch']/2):
+                temp_penalty_func = 100*penalty2func_init
+            elif i_epoch < int(3*R['max_epoch']/4):
+                temp_penalty_func = 200*penalty2func_init
+            else:
+                temp_penalty_func = 500 * penalty2func_init
+
+2、残差连接网络，可以提升训练结果的精度。

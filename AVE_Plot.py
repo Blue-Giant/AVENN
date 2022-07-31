@@ -1,0 +1,35 @@
+import AVE_tools
+import matplotlib.pyplot as plt
+
+# -----------------------  plot the training results into figures ---------------------------------
+plt.figure()
+ax = plt.gca()
+plt.plot(epoch_1000, R['training loss'], 'b-.', label='loss')
+ax.set_yscale('log')
+plt.xlabel('epoch/1000', fontsize=18)
+plt.legend(fontsize=18)
+plt.title('loss', fontsize=15)
+fntmp = '%s/%strain_loss' % (R['FolderName'], R['seed'])
+AVE_tools.mySaveFig(plt, fntmp, ax=ax, isax=1, iseps=0)
+
+plt.figure()
+ax = plt.gca()
+plt.plot(epoch_1000, R['solution error'], 'r:', label='ERR')
+ax.set_yscale('log')
+plt.xlabel('epoch/1000', fontsize=18)
+plt.ylabel('error', fontsize=18)
+plt.legend(fontsize=18)
+plt.title('solution error', fontsize=15)
+fntmp = '%s/%ssolu_error2train' % (R['FolderName'], R['seed'])
+AVE_tools.mySaveFig(plt, fntmp, ax=ax, isax=1, iseps=0)
+
+plt.figure()
+ax = plt.gca()
+plt.plot(epoch_1000, R['function residual'], 'r:', label='REL')
+ax.set_yscale('log')
+plt.xlabel('epoch/1000', fontsize=18)
+plt.ylabel('error', fontsize=18)
+plt.legend(fontsize=18)
+plt.title('function error', fontsize=15)
+fntmp = '%s/%sfunc_error2train' % (R['FolderName'], R['seed'])
+AVE_tools.mySaveFig(plt, fntmp, ax=ax, isax=1, iseps=0)
